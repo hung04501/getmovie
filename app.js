@@ -12,11 +12,18 @@ var app = express();
 //connect to our database
 //Ideally you will obtain DB details from a config file
 
+
 var dbName='movieDB';
 
-var connectionString='mongodb://localhost:27017/'+dbName;
+//provide a sensible default for local development
+mongodb_connection_string = 'mongodb://127.0.0.1:27017/' + dbName;
+//take advantage of openshift env vars when available:
+if(process.env.OPENSHIFT_MONGODB_DB_URL){
+  mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + dbName;
+}
 
-mongoose.connect(connectionString);
+
+mongoose.connect(mongodb_connection_string);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
