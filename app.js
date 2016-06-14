@@ -13,10 +13,13 @@ var app = express();
 //Ideally you will obtain DB details from a config file
 
 
-var dbName='movieDB';
+var dbName='nodejs';
 
 //provide a sensible default for local development
-mongodb_connection_string = 'mongodb://getmovie.herokuapp.com:27017/' + dbName;
+
+mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/
+mongodb_connection_string = 'mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/' + dbName;
+//mongodb_connection_string = 'mongodb://getmovie.herokuapp.com:27017/' + dbName;
 //take advantage of openshift env vars when available:
 if(process.env.OPENSHIFT_MONGODB_DB_URL){
   mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + dbName;
